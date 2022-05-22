@@ -4,7 +4,6 @@ class ProfilesController < ApplicationController
 
   # GET /profiles
   def index
-    print "HOHOH"
     profiles = Profile.all
     render json: profiles, status: :ok
   end 
