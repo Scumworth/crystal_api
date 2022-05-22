@@ -7,10 +7,15 @@ class ApplicationController < ActionController::API
       header = header.split(" ").last
       begin
         decoded_token = JsonWebToken.decode(header)
-        current_user = User.find(decoded_token[:user_id])
+        @current_user = User.find(decoded_token[:user_id])
       rescue JWT::DecodeError => e
         render json: { errors: "Error: #{e.message}" }, status: :unauthorized
       end
     end
   end
+
+  def current_user
+    @current_user
+  end
+
 end

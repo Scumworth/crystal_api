@@ -1,3 +1,10 @@
 class ProfileSerializer < ActiveModel::Serializer
-  attributes :id, :first_name, :last_name, :email, :team_id
+  attributes :first_name, :last_name
+  attribute :id, if: :is_current_user?
+  attribute :email, if: :is_current_user?
+  attribute :team_id, if: :is_current_user?
+
+  def is_current_user?
+    current_user ? true : false
+  end
 end
