@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :authenticate_request  
+  before_action :authenticate_request, :respond_if_unauthenticated
 
   # GET /teams
   def index
