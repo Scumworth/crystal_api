@@ -1,21 +1,26 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :update, :destroy]
   before_action :authenticate_request
+  before_action :respond_if_unauthenticated, except: [:show, :index]
 
   # GET /profiles
   def index
-    profiles = Profile.all
-    render json: profiles, status: :ok
+    @profiles = Profile.all
+    render json: @profiles, status: :ok
   end 
 
   # GET /profiles/:id
   def show
-    render json: profile, status: :ok
+    render json: @profile, status: :ok
   end
   
-  # POST /profile
+  # POST /profiles
   def create
     profile = Profile.new(profile_params)
+    puts "test"
+    #@profile.each do |k, v|
+      #puts key + ':' + value
+    #end
     if profile.save
       render json: profile, status: :created
     else
@@ -25,9 +30,11 @@ class ProfilesController < ApplicationController
   
   # PUT /profiles/:id
   def update
-    if profile
-      profile.update(profile_params)
-      render json: profile, status: :ok
+    if @profile
+      @profile.update(profile_params)
+      puts "TEST"
+      print @profile
+      render json: @profile, status: :ok
     else 
       render json: { error: 'Error: unable to update Profile' }, status: :bad_request
     end
@@ -35,8 +42,8 @@ class ProfilesController < ApplicationController
   
   # DELETE /profiles/:id
   def destroy
-    if profile
-      profile.destroy
+    if @profile
+      @profile.destroy
       render json: @profile, status: :ok
     else
       render json: { error: 'Error: unable to delete Profile' }, status: :bad_request
@@ -46,10 +53,10 @@ class ProfilesController < ApplicationController
   private
 
   def set_profile
-    profile = Profile.find(params[:id])
+    @profile = Profile.find(params[:id])
   end
   
   def profile_params
-    params.permit(:first_name, :last_name, :email)
+    params.permit(:first_name, :last_name, :email, :team_id)
   end
 end

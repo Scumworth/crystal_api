@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     render json: users, status: :ok
   end
 
-  # GET /users/:id
+  # GET /users
   def show
     render json: user, status: :ok 
   end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /users/:id
+  # PUT /users
   def update
     if user.update(user_params)
       render json: user, status: :ok
