@@ -1,24 +1,48 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Full Stack Backend Engineer Project
 
-Things you may want to cover:
+### Create an API that has the following functionality
 
-* Ruby version
+## Data structures
 
-* System dependencies
+### Profile
+  - first name
+  - last name
+  - email
+  
+### Team
+  - name
+  
+### Associations
+- A Profile should be part of a team
 
-* Configuration
+## Routes
+Authentication should be done through a JWT token passed in the header
 
-* Database creation
+### Authenticated routes
 
-* Database initialization
+For profiles
+- GET return all profiles
+- GET return one profile
+- POST create profile
+- PUT update profile
+- DELETE delete profile
 
-* How to run the test suite
+### Unauthenticated routes
 
-* Services (job queues, cache servers, search engines, etc.)
+For profiles
 
-* Deployment instructions
+- GET return all profiles
+- GET return one profile
 
-* ...
+Data returned should be limited to:
+- first name
+- last name
+
+## Tests
+Create tests for each of the created above
+
+## Bonus: Deploy
+- Use AWS free tier or provider of your choice to deploy the app
+
