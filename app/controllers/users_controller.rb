@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
   # PUT /users/:id
   def update
-    if @user
+    if @user&.authenticate(params[:password])
       @user.update(user_params)
       render json: @user, status: :ok
     else
