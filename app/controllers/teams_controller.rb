@@ -3,14 +3,14 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    teams = Team.all
-    render json: teams, status: :ok
+    @teams = Team.all
+    render json: @teams, status: :ok
   end
 
   # GET /teams/:id
   def show
-    team = Team.find(params[:id])
-    render json: team, status: :ok
+    @team = Team.find(params[:id])
+    render json: @team, status: :ok
   end
 end
 

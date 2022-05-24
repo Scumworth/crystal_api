@@ -16,13 +16,10 @@ class ProfilesController < ApplicationController
   
   # POST /profiles
   def create
-    profile = Profile.new(profile_params)
-    puts "test"
-    #@profile.each do |k, v|
-      #puts key + ':' + value
-    #end
-    if profile.save
-      render json: profile, status: :created
+    @profile = Profile.new(profile_params)
+    # ensure profile is being created for existing team
+    if Team.find_by(id: params[:team_id]) && @profile.save
+      render json: @profile, status: :created
     else
       render json: { error: 'Error: unable to create Profile' }, status: :bad_request
     end
@@ -32,8 +29,6 @@ class ProfilesController < ApplicationController
   def update
     if @profile
       @profile.update(profile_params)
-      puts "TEST"
-      print @profile
       render json: @profile, status: :ok
     else 
       render json: { error: 'Error: unable to update Profile' }, status: :bad_request
@@ -44,7 +39,7 @@ class ProfilesController < ApplicationController
   def destroy
     if @profile
       @profile.destroy
-      render json: @profile, status: :ok
+      render status: :no_content
     else
       render json: { error: 'Error: unable to delete Profile' }, status: :bad_request
     end

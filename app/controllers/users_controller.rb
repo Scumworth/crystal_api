@@ -4,20 +4,20 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    users = User.all
-    render json: users, status: :ok
+    @users = User.all
+    render json: @users, status: :ok
   end
 
   # GET /users
   def show
-    render json: user, status: :ok 
+    render json: @user, status: :ok 
   end
 
   # POST /users
   def create
-    user = User.new(user_params)
-    if user.save
-      render json: user, status: :created
+    @user = User.new(user_params)
+    if @user.save
+      render json: @user, status: :created
     else 
       render json: { error: 'Error: unable to create user' }, status: :bad_request
     end
@@ -25,8 +25,8 @@ class UsersController < ApplicationController
 
   # PUT /users
   def update
-    if user.update(user_params)
-      render json: user, status: :ok
+    if @user.update(user_params)
+      render json: @user, status: :ok
     else
       render json: { error: 'Error: unable to update user' }, status: :bad_request
     end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   private  
 
   def set_user
-    user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def user_params
