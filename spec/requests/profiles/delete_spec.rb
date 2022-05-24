@@ -6,14 +6,14 @@ describe 'DELETE /profiles' do
   # create test user 
   let!(:user) {
     user = User.create({
-      username: Time.now, 
+      username: SecureRandom.uuid, 
       password: 'password'
     })
   }
   # create test team
   let!(:team) {
     team = Team.create({
-      name: Faker::Lorem.word
+      name: SecureRandom.uuid
     })
   }
 
@@ -30,7 +30,7 @@ describe 'DELETE /profiles' do
   # test authenticated route
   context 'authenticated user' do
     it 'should return a 204 No Content status' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       delete '/profiles/' + profile.id.to_s(), headers: { Authorization: token }
       # expect HTTP status code 204 No Content
       expect(response.status).to eq(204)

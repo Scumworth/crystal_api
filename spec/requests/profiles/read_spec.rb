@@ -6,14 +6,14 @@ describe 'GET /profiles' do
   # create test user 
   let!(:user) {
     user = User.create({
-      username: Time.now, 
+      username: SecureRandom.uuid, 
       password: 'password'
     })
   }
   # create test profile 
   let!(:profile) {
     team = Team.create({
-      name: Faker::Lorem.word
+      name: SecureRandom.uuid
     })
     profile = Profile.create({
       first_name: Faker::Name.first_name, 
@@ -26,7 +26,7 @@ describe 'GET /profiles' do
   # test authenticated route
   context 'authenticated user' do
     it 'should return a 200 OK status and all profiles with all keys' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       get '/profiles', headers: { Authorization: token }
       # expect HTTP status code 200 OK
       expect(response.status).to eq(200)
@@ -34,7 +34,7 @@ describe 'GET /profiles' do
       expect(JSON.parse(response.body).length == Profile.all.length)
     end
     it 'should return a 200 OK status and single profile with all keys' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       get '/profiles/' + profile.id.to_s(), headers: { Authorization: token }
       # expect HTTP status code 200 OK
       expect(response.status).to eq(200)

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_request, :respond_if_unauthenticated, except: [:create]
-  before_action :set_user, only: [:show, :destroy]
+  before_action :set_user, only: [:show, :destroy, :update]
 
   # GET /users
   def index
@@ -25,7 +25,8 @@ class UsersController < ApplicationController
 
   # PUT /users/:id
   def update
-    if @user.update(user_params)
+    if @user
+      @user.update(user_params)
       render json: @user, status: :ok
     else
       render json: { error: 'Error: unable to update user' }, status: :bad_request
@@ -34,8 +35,8 @@ class UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    if @profile
-      @profile.destroy
+    if @user
+      @user.destroy
       render status: :no_content
     else
       render json: { error: 'Error: unable to delete Profile' }, status: :bad_request

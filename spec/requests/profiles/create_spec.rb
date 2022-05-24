@@ -6,14 +6,14 @@ describe 'POST /profiles' do
   # create test user
   let!(:user) {
     user = User.create({
-      username: Time.now, 
+      username: SecureRandom.uuid, 
       password: 'password'
     })
   }
   # create test team
   let!(:team) {
     team = Team.create({
-      name: Faker::Lorem.word
+      name: SecureRandom.uuid, 
     })
   }
  
@@ -34,8 +34,8 @@ describe 'POST /profiles' do
   # test authenticated route
   context 'authenticated user' do
     it 'should return a 201 Created status and appropriate json keys when token provided and keys correct' do
-      token = JsonWebToken.encode(user_id: user.id)
-      # send post request to /profiles/
+      token = JsonWebToken.encode(username: user.username)
+      # send post request to /profiles
       post '/profiles', 
         params: {
           first_name: first_name,
@@ -44,7 +44,7 @@ describe 'POST /profiles' do
           team_id: team_id
         }, 
         headers: {
-          authorization: token 
+          Authorization: token 
         }
       # expect HTTP Status 201 Created
       expect(response.status).to eq(201)
@@ -57,13 +57,13 @@ describe 'POST /profiles' do
     end
 
     it 'should return a 400 Bad Request status when authorized but with bad keys' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       post '/profiles', 
         params: {
           wrong_key: 'data that should not be posted'
         },
         headers: {
-          authorization: token
+          Authorization: token
         }
       # expect HTTP status code 400 Bad Request
       expect(response.status).to eq(400)

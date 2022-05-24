@@ -6,7 +6,7 @@ describe 'PUT /profiles' do
   # create test user 
   let!(:user) {
     user = User.create({
-      username: Time.now, 
+      username: SecureRandom.uuid, 
       password: 'password'
     })
   }
@@ -27,7 +27,7 @@ describe 'PUT /profiles' do
   # test authenticated route
   context 'authenticated user' do
     it 'should return a 200 OK status and expected updated json keys when token provided and keys correct' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       new_first_name = Faker::Name.first_name
       new_email = Faker::Internet.email
       # send put request to /profiles
@@ -50,7 +50,7 @@ describe 'PUT /profiles' do
     end
 
     it 'should return a 200 OK status with unchanged json keys when authorized but with bad keys' do
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(username: user.username)
       put '/profiles/' + profile.id.to_s(), 
         params: {
           wrong_key: 'data that should not be put'

@@ -10,6 +10,11 @@ TEAM_SIZE = 10
 Profile.delete_all
 Team.delete_all
 
+admin = User.create({
+  username: 'admin',
+  password: 'admin'
+})
+
 # Generate new entries
 NUM_TEAMS.times do
   team = Team.create({
