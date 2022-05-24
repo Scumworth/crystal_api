@@ -27,6 +27,9 @@ gem "rack-cors"
 # Use JWT for user authentication
 gem "jwt"
 
+# Use Faker for seeding database
+gem "faker"
+
 # Use Active Model Serializers for JSON formatting
 gem "active_model_serializers"
 
@@ -35,8 +38,6 @@ group :development, :test do
   gem "rspec-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  # Use Faker for seeding database
-  gem "faker"
 end
 
 group :development do
