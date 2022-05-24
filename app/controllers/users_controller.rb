@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     render json: @users, status: :ok
   end
 
-  # GET /users
+  # GET /users/:id
   def show
     render json: @user, status: :ok 
   end
@@ -23,12 +23,22 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /users
+  # PUT /users/:id
   def update
     if @user.update(user_params)
       render json: @user, status: :ok
     else
       render json: { error: 'Error: unable to update user' }, status: :bad_request
+    end
+  end
+
+  # DELETE /users/:id
+  def destroy
+    if @profile
+      @profile.destroy
+      render status: :no_content
+    else
+      render json: { error: 'Error: unable to delete Profile' }, status: :bad_request
     end
   end
 

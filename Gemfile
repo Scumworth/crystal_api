@@ -12,9 +12,6 @@ gem "sqlite3", "~> 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
-
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 
@@ -40,13 +37,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # Use Faker for seeding database
   gem "faker"
-end
-
-group :test do
-  # Use Factory Bot for test data generation
-  gem "factory_bot_rails"
-  # Use Should Matchers for testing associations
-  gem "shoulda-matchers"
 end
 
 group :development do
