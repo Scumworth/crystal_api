@@ -20,6 +20,7 @@ describe 'PUT /users' do
       put '/users/' + user.id.to_s(), 
         params: {
           username: new_username,
+          password: 'password'
         }, 
         headers: {
           Authorization: token 
@@ -35,7 +36,8 @@ describe 'PUT /users' do
       token = JsonWebToken.encode(username: user.username)
       put '/users/' + user.id.to_s(), 
         params: {
-          wrong_key: 'data that should not be put'
+          wrong_key: 'data that should not be put',
+          password: 'password'
         },
         headers: {
           Authorization: token
